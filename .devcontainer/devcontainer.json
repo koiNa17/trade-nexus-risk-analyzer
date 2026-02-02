@@ -1,0 +1,13 @@
+{
+    "name": "Trade Nexus Env",
+    "image": "mcr.microsoft.com/devcontainers/python:3.12",
+    "features": {
+        "ghcr.io/devcontainers/features/git:1": {}
+    },
+    "postCreateCommand": "pip install pandas yfinance streamlit plotly",
+    "customizations": {
+        "vscode": {
+            "settings": {}
+        }
+    }
+}
