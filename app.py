@@ -11,8 +11,15 @@ periods = {'1か月': '1mo', '半年': '6mo', '1年': '1y'}
 p_name = st.selectbox("期間を選択してください：", list(periods.keys()))
 data = yf.Ticker(tickers[name]).history(period=periods[p_name])
 
-# data = yf.Ticker(tickers[name]).history(period="1mo")
-
 st.subheader(f"{name} のデータと推移")
 st.write(data)
 st.line_chart(data['Close'])
+
+st.subheader("リスク指標")
+returns = data['Close'].pct_change().dropna()
+volatility = returns.std() * (252 ** 0.5)
+max_drawdown = (data['Close'] / data['Close'].cummax() - 1).min()
+
+col1, col2 = st.columns(2)
+col1.metric("年率ボラティリティ", f"{volatility:.2%}")
+col2.metric("期間内 最大下落幅", f"{max_drawdown:.2%}")
