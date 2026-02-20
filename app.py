@@ -5,9 +5,10 @@ st.title("Trade-Nexus Risk Analyzer")
 st.write("金融データ分析ダッシュボード")
 
 st.subheader("USD/JPY(ドル円)過去1か月のデータ")
-ticker = yf.Ticker("JPY=X")
-data = ticker.history(period="1mo")
-st.write(data)
+tickers = {'ドル円': 'JPY=X', 'ユーロ円': 'EURJPY=X', '日経平均': '^N225'}
+name = st.selectbox("分析対象を選択してください:", list(tickers.keys()))
+data = yf.Ticker(tickers[name]).history(period="1mo")
 
-st.subheader("USD/JPY 終値の推移")
+st.subheader(f"{name} のデータと推移")
+st.write(data)
 st.line_chart(data['Close'])
